@@ -1,5 +1,6 @@
 // src/components/form/SearchForm.tsx
 import { useState } from "react";
+import { toast } from "sonner";
 
 type SearchFormProps = {
   userName: string;
@@ -12,16 +13,26 @@ const SearchForm = ({ userName, setUserName }: SearchFormProps) => {
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (text.trim() === "") {
-      console.log("please enter username");
+      // ✅ پیام خطا با toast
+      toast.error("Please enter a username", {
+        description: "You need to type a GitHub username to search.",
+        duration: 3000,
+      });
       return;
     }
     setUserName(text);
+    
+    // ✅ پیام موفقیت با toast
+    toast.success("Searching for user", {
+      description: `Looking for "${text}" on GitHub...`,
+      duration: 2000,
+    });
   };
 
   return (
     <div>
       {/* 🔴 کادر هشدار قرمز برای کاربران ایرانی */}
-      <div className="mb-4 p-3 bg-red-50 border border-red-500 rounded-lg text-red-700 text-sm text-center">
+      <div className="mb-4 p-3 bg-amber-50 border border-amber-500 rounded-lg text-amber-700 text-sm text-center">
         ⚠️ If you are in Iran, please enable your VPN to connect to GitHub API.
       </div>
 
